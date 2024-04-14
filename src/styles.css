@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background-color: #f2f6f8;
+}
+.bg-disabled {
+  background-color: #d1d5db;
+}

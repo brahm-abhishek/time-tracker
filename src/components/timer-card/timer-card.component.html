@@ -1,0 +1,31 @@
+<section class="bg-white mt-8 mx-2 md:mx-8 lg:mx-36 p-6 rounded-2xl shadow-md">
+    <div class="flex flex-col md:flex-row">
+        <div class="md:w-8/12">
+            <h3 class="font-bold px-3 text-xl">{{ timeTrackerDetail.description || '--'}}</h3>
+            <h3 class="font-bold p-3">History</h3>
+            <ng-container *ngIf="timeTrackerDetail.timeHistoryList;else noHistoryFound">
+                <p class="px-3" *ngFor="let timehistory of timeTrackerDetail.timeHistoryList">
+                    Started the timer at {{ timehistory.startTime | date:'d/M/yyy,H:mm:ss' || '--' }}
+                    {{ timehistory.endTime ? '& stopped at ' + (timehistory.endTime | date:'d/M/yyy,H:mm:ss') :
+                    '(Active)' }}
+                </p>
+            </ng-container>
+            <ng-template #noHistoryFound>
+                <p class="px-3">No History Found, click on the start button to track the timer</p>
+            </ng-template>
+        </div>
+        <div class="flex flex-col md:flex-row w-full md:w-4/12 justify-between items-start">
+            <div class="border-b md:border-r-[3px] border-gray-300 h-10 w-full md:w-auto"></div>
+            <div class="text-blue-700 text-2xl">
+                {{totalTimeCount.hours}}:{{totalTimeCount.minutes}}:{{totalTimeCount.seconds}}</div>
+            <div class="flex justify-center md:justify-end items-center space-x-6 mt-4 md:mt-0">
+                <button class="px-4 md:px-9 py-1 bg-blue-500 hover:bg-blue-700 rounded-3xl h-10 text-white"
+                    (click)="startTimer()" *ngIf="!timeTrackerDetail.active">Start</button>
+                <button class="px-4 md:px-9 py-1 bg-red-500 hover:bg-red-700 rounded-3xl h-10 text-white"
+                    (click)="endTimer()" *ngIf="timeTrackerDetail.active">Stop</button>
+                <button class="bg-gray-200 px-4 py-1 hover:bg-gray-300 rounded-3xl h-10"
+                    (click)="deleteTimeTracker()">X</button>
+            </div>
+        </div>
+    </div>
+</section>
