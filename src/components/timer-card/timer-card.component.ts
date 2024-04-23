@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import {
   time,
@@ -12,7 +12,7 @@ import { TimeTrackerService } from '../../services/time-tracker.service';
   templateUrl: './timer-card.component.html',
   styleUrl: './timer-card.component.css',
 })
-export class TimerCardComponent implements OnInit {
+export class TimerCardComponent implements OnInit, OnDestroy {
 
   @Input({ required: true }) timeTrackerDetail!: timeTrackerDetails;
 
@@ -78,5 +78,9 @@ export class TimerCardComponent implements OnInit {
     if (confirm) {
       this.timeTrackerService.deleteTimerData(this.timeTrackerDetail)
     }
+  }
+
+  ngOnDestroy(): void {
+     this.timerSubscription.unsubscribe();
   }
 }
